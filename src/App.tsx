@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import NotesList from './components/notes-list/notes-list';
+import NoteEditor from './components/note-editor/note-editor';
+import CreateNotePage from './components/create-note-page/create-note-page';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<NotesList />} />
+        <Route path="/create" element={<CreateNotePage />} />
+        <Route path="/edit/:id" element={<NoteEditor />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
-export default App;
+const Root: React.FC = () => {
+  return (
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </React.StrictMode>
+  );
+};
+
+export default Root;
